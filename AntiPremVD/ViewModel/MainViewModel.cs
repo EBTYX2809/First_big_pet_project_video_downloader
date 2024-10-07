@@ -153,7 +153,7 @@ namespace AntiPremVD.ViewModel
         }
         private void Settings(object parameter)
         {
-
+            // Will be later
         }
         private async void LoadingUrl()
         {

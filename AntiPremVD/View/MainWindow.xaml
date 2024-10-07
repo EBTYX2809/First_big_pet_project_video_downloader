@@ -12,6 +12,7 @@
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,11 +24,13 @@
             <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid Background="#9932cc">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
@@ -50,46 +53,47 @@
         <Border Grid.Row="0"
                 Grid.Column="1"
                 Margin="0 0 90 0"
-            BorderBrush="Black"
-BorderThickness="1"
-CornerRadius="10"
-HorizontalAlignment="Center"
-VerticalAlignment="Center"
-Width="650"
-Height="75">
-            <Border CornerRadius="10"
-            Background="#d58ff7"
-    BorderThickness="0">
-                <TextBox Text="{Binding VideoUrl, UpdateSourceTrigger=PropertyChanged}"                    
-         Background="Transparent"
-                Foreground="Black"
-         FontSize="48"
-         VerticalAlignment="Center"
-         HorizontalAlignment="Stretch"
-         Padding="10, 5"               
-                BorderThickness="0"
-                IsReadOnly="{Binding DataContext.VideoInfoViewModel.IsVideoInContentControl, 
-                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="650"
+                Height="75">
 
+            <Border CornerRadius="10"
+                    Background="#d58ff7"
+                    BorderThickness="0">
+                <TextBox Text="{Binding VideoUrl, UpdateSourceTrigger=PropertyChanged}"                    
+                         Background="Transparent"
+                         Foreground="Black"
+                         FontSize="48"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch"
+                         Padding="10, 5"               
+                         BorderThickness="0"
+                         IsReadOnly="{Binding DataContext.VideoInfoViewModel.IsVideoInContentControl, 
+                                             RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
             </Border>
         </Border>
 
         <!-- Placeholder for url -->
-        <TextBlock  Text="Enter URL:"
-                    Foreground="Black"
-                    Opacity="0.75"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="0 0 90 0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="650"
-                    Height="75"
-                    FontSize="48"
-                    Padding="10, 5"
-                    IsHitTestVisible="False"
-                    Visibility="{Binding IsPlaceholderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <TextBlock Text="Enter URL:"
+                   Foreground="Black"
+                   Opacity="0.75"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Margin="0 0 90 0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Width="650"
+                   Height="75"
+                   FontSize="48"
+                   Padding="10, 5"
+                   IsHitTestVisible="False"
+                   Visibility="{Binding IsPlaceholderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
+        <!-- Delete button -->
         <Border Grid.Row="0"
                 Grid.Column="1"
                 Width="75"
@@ -101,21 +105,21 @@ Height="75">
                 BorderThickness="1"
                 CornerRadius="10">
             <Border CornerRadius="10"
-            Background="#d58ff7"
-    BorderThickness="0">
+                    Background="#d58ff7"
+                    BorderThickness="0">
                 <Button ToolTip="Delete all videos from download list"
-                       Foreground="Black"
+                        Foreground="Black"
                         Style="{StaticResource Xbutton}"
-                Content="✖"
-                FontSize="40"
-                Command="{Binding ClearVideosCommand}"/>
+                        Content="✖"
+                        FontSize="40"
+                        Command="{Binding ClearVideosCommand}"/>
             </Border>
         </Border>
 
         <UniformGrid Background="#4b0082" Rows="5" Grid.Column="0" Grid.Row="1" DataContext="{Binding VideoInfoViewModel}">
             <!-- Play Pause -->
             <ToggleButton ToolTip="Start download all videos"  Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" 
-              Command="{Binding DownloadAllCommand}"
+                          Command="{Binding DownloadAllCommand}"
                           DataContext="{Binding VideoItemsViewModel}">
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="ToggleButton">
@@ -204,8 +208,8 @@ Height="75">
 
             <!-- Format -->
             <ToggleButton ToolTip="Select video(includes audio)/audio only" Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" 
-  Command="{Binding SwitchFormatCommand}"
-              IsChecked="{Binding Format}">
+                          Command="{Binding SwitchFormatCommand}"
+                          IsChecked="{Binding Format}">
 
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="ToggleButton">
@@ -217,10 +221,10 @@ Height="75">
 
                             <!-- Selection Indicator -->
                             <Border Background="#9932cc"
-    Height="50"
-    Width="75"
-    HorizontalAlignment="Left"
-    VerticalAlignment="Center">
+                                    Height="50"
+                                    Width="75"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
                                 <Border.RenderTransform>
                                     <TranslateTransform x:Name="IndicatorTransform"/>
                                 </Border.RenderTransform>
@@ -236,18 +240,18 @@ Height="75">
                                            Fill="Transparent"/>
                             </Canvas>
                             <TextBlock Text="▶" 
-       Grid.Column="0"
-       HorizontalAlignment="Center" 
-       VerticalAlignment="Center" 
-       Foreground="Black" 
-       FontSize="30"
+                                       Grid.Column="0"
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" 
+                                       Foreground="Black" 
+                                       FontSize="30"
                                        Margin="4 0 0 5"/>
                             <TextBlock Text="🔊" 
-       Grid.Column="1"
-       HorizontalAlignment="Center" 
-       VerticalAlignment="Center" 
-       Foreground="Black" 
-       FontSize="35"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" 
+                                       Foreground="Black" 
+                                       FontSize="35"
                                        Margin="0 0 0 5"/>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -257,9 +261,9 @@ Height="75">
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="IndicatorTransform"
-                             Storyboard.TargetProperty="X"
-                             To="75"
-                             Duration="0:0:0.3"/>
+                                                             Storyboard.TargetProperty="X"
+                                                             To="75"
+                                                             Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -267,9 +271,9 @@ Height="75">
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="IndicatorTransform"
-                             Storyboard.TargetProperty="X"
-                             To="0"
-                             Duration="0:0:0.3"/>
+                                                             Storyboard.TargetProperty="X"
+                                                             To="0"
+                                                             Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
@@ -281,13 +285,13 @@ Height="75">
 
             <!-- Qualities -->
             <ToggleButton ToolTip="Select quality for video/audio" Cursor="Hand" Content="HD" Width="150" Height="75" HorizontalAlignment="Center" 
-              Command="{Binding OpenQualityPanelCommand}">
+                          Command="{Binding OpenQualityPanelCommand}">
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="ToggleButton">
                         <Border x:Name="border" 
-            Background="{TemplateBinding Background}" 
-            BorderBrush="{TemplateBinding BorderBrush}" 
-            BorderThickness="{TemplateBinding BorderThickness}">
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -316,16 +320,16 @@ Height="75">
 
             <!-- Folder -->
             <ToggleButton Cursor="Hand" ToolTip="Select the folder for downloadings" Width="150" Height="75" HorizontalAlignment="Center" VerticalAlignment="Center"
-              IsChecked="{Binding DataContext.FolderToggleButton, 
-                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                          IsChecked="{Binding DataContext.FolderToggleButton, 
+                                              RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                           Command="{Binding DataContext.ChangeDownloadPathCommand, 
-                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}">>
+                                              RelativeSource={RelativeSource AncestorType={x:Type Window}}}">>
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="ToggleButton">
                         <Grid>
                             <!-- Bottom part of folder -->
                             <Path Stroke="Black" StrokeThickness="1" Fill="#9932cc" 
-              Data="M 40,65 L 40,15 L 65,15 L 75,25 L 110,25 L 110,65 Z"/>
+                                  Data="M 40,65 L 40,15 L 65,15 L 75,25 L 110,25 L 110,65 Z"/>
 
                             <!-- Top part of folder -->
                             <Path Stroke="Black" StrokeThickness="1" Fill="#4b0082">
@@ -347,18 +351,18 @@ Height="75">
                         <!-- Animation for toggle button -->
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding DataContext.FolderToggleButton, 
-                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="True">
+                                                           RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="True">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <!-- Animation right point top line -->
                                             <PointAnimation Storyboard.TargetName="TopLineEnd"
-                                        Storyboard.TargetProperty="Point"
-                                        To="120,40" Duration="0:0:0.2" />
+                                                            Storyboard.TargetProperty="Point"
+                                                            To="120,40" Duration="0:0:0.2" />
                                             <!-- Animation left point top line -->
                                             <PointAnimation Storyboard.TargetName="BottomLeft"
-                                        Storyboard.TargetProperty="Point"
-                                        To="50,40" Duration="0:0:0.2" />
+                                                            Storyboard.TargetProperty="Point"
+                                                            To="50,40" Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </DataTrigger.EnterActions>
@@ -367,12 +371,12 @@ Height="75">
                                         <Storyboard>
                                             <!-- Animation back right point top line -->
                                             <PointAnimation Storyboard.TargetName="TopLineEnd"
-                                        Storyboard.TargetProperty="Point"
-                                        To="115,35" Duration="0:0:0.2" />
+                                                            Storyboard.TargetProperty="Point"
+                                                            To="115,35" Duration="0:0:0.2" />
                                             <!-- Animation back left point top line -->
                                             <PointAnimation Storyboard.TargetName="BottomLeft"
-                                        Storyboard.TargetProperty="Point"
-                                        To="45,35" Duration="0:0:0.2" />
+                                                            Storyboard.TargetProperty="Point"
+                                                            To="45,35" Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </DataTrigger.ExitActions>
@@ -384,8 +388,8 @@ Height="75">
 
             <!-- Settings -->
             <ToggleButton ToolTip="Settings" Cursor="Hand" Width="150" Height="75" Background="#4b0082" BorderBrush="Transparent" BorderThickness="0"
-              Command="{Binding DataContext.SettingsCommand, 
-                                                RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                          Command="{Binding DataContext.SettingsCommand, 
+                                            RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <ToggleButton.Style>
                     <Style TargetType="ToggleButton">
                         <Setter Property="Background" Value="Transparent"/>
@@ -394,8 +398,8 @@ Height="75">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ToggleButton">
                                     <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="0">
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="0">
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
@@ -457,8 +461,8 @@ Height="75">
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation To="90" Duration="0:0:0.3" 
-                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                         Storyboard.TargetName="canvasGear"/>
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                 Storyboard.TargetName="canvasGear"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -466,8 +470,8 @@ Height="75">
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation To="0" Duration="0:0:0.3" 
-                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                         Storyboard.TargetName="canvasGear"/>
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                 Storyboard.TargetName="canvasGear"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -475,9 +479,13 @@ Height="75">
             </ToggleButton>
         </UniformGrid>
 
+
         <!-- Zone for downloading videos -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{Binding VideoList}" DataContext="{Binding VideoInfoViewModel.VideoItemsViewModel}">
+        <ScrollViewer Grid.Row="1" 
+                      Grid.Column="1" 
+                      VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{Binding VideoList}" 
+                          DataContext="{Binding VideoInfoViewModel.VideoItemsViewModel}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Background="#292929"/>
@@ -491,16 +499,21 @@ Height="75">
         </ScrollViewer>
 
         <!-- Panel with actual video qualities -->
-        <ItemsControl Grid.Column="1" Grid.Row="1"  Width="80" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Center"
+        <ItemsControl Grid.Column="1"
+                      Grid.Row="1"  
+                      Width="80" 
+                      Height="Auto" 
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Center"
                       Visibility="{Binding DataContext.VideoInfoViewModel.IsQualityPanelOpen,
-                      RelativeSource={RelativeSource AncestorType={x:Type Window}},
-                      Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                           Converter={StaticResource BooleanToVisibilityConverter}}"
                       ItemsSource="{Binding QualityPanelList}" 
                       DataContext="{Binding VideoInfoViewModel.CurrentVideo.DownloadInfo}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="{Binding DataContext.VideoInfoViewModel.QualityPanelListRows, 
-                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                                               RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
@@ -512,18 +525,19 @@ Height="75">
                             BorderBrush="Gray"
                             BorderThickness="1, 0, 0, 0"
                             Command="{Binding DataContext.VideoInfoViewModel.SelectQualityCommand, 
-          RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                              RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                             CommandParameter="{Binding .}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <!-- Block with info about video and setting it -->
-        <ContentControl Grid.Row="1" Grid.Column="1"
-                Visibility="{Binding IsVideoInContentControl, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Content="{Binding CurrentVideo}" 
-                ContentTemplate="{StaticResource VideoInfoTemplate}"
-                DataContext="{Binding VideoInfoViewModel}"/>
-
+        <ContentControl Grid.Row="1"
+                        Grid.Column="1"
+                        Visibility="{Binding IsVideoInContentControl, 
+                                            Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Content="{Binding CurrentVideo}" 
+                        ContentTemplate="{StaticResource VideoInfoTemplate}"
+                        DataContext="{Binding VideoInfoViewModel}"/>
     </Grid>
 </Window>
