@@ -1,0 +1,529 @@
+﻿<Window x:Class="AntiPremVD.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AntiPremVD.View"
+        xmlns:vm="clr-namespace:AntiPremVD.ViewModel"
+        mc:Ignorable="d"
+        Title="AntiPremVD" 
+        Height="600" 
+        Width="1000"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ItemTemplate.xaml"/>
+                <ResourceDictionary Source="ContentTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#9932cc">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title of app -->
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0" 
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center">
+            <Run Text="ANTI" FontSize="40" FontWeight="Bold" FontFamily="Berlin Sans FB Demi"/>
+            <LineBreak/>
+            <Run Text="PREM" FontSize="40" FontWeight="Bold" FontFamily="Berlin Sans FB Demi"/>
+            <LineBreak/>
+            <Run Text="Video Downloader" FontSize="18" FontFamily="Berlin Sans FB Demi"/>
+        </TextBlock>
+
+        <!-- Url field -->
+        <Border Grid.Row="0"
+                Grid.Column="1"
+                Margin="0 0 90 0"
+            BorderBrush="Black"
+BorderThickness="1"
+CornerRadius="10"
+HorizontalAlignment="Center"
+VerticalAlignment="Center"
+Width="650"
+Height="75">
+            <Border CornerRadius="10"
+            Background="#d58ff7"
+    BorderThickness="0">
+                <TextBox Text="{Binding VideoUrl, UpdateSourceTrigger=PropertyChanged}"                    
+         Background="Transparent"
+                Foreground="Black"
+         FontSize="48"
+         VerticalAlignment="Center"
+         HorizontalAlignment="Stretch"
+         Padding="10, 5"               
+                BorderThickness="0"
+                IsReadOnly="{Binding DataContext.VideoInfoViewModel.IsVideoInContentControl, 
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+
+            </Border>
+        </Border>
+
+        <!-- Placeholder for url -->
+        <TextBlock  Text="Enter URL:"
+                    Foreground="Black"
+                    Opacity="0.75"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0 0 90 0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="650"
+                    Height="75"
+                    FontSize="48"
+                    Padding="10, 5"
+                    IsHitTestVisible="False"
+                    Visibility="{Binding IsPlaceholderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <Border Grid.Row="0"
+                Grid.Column="1"
+                Width="75"
+                Height="75"                
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0 0 55 0"
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="10">
+            <Border CornerRadius="10"
+            Background="#d58ff7"
+    BorderThickness="0">
+                <Button ToolTip="Delete all videos from download list"
+                       Foreground="Black"
+                        Style="{StaticResource Xbutton}"
+                Content="✖"
+                FontSize="40"
+                Command="{Binding ClearVideosCommand}"/>
+            </Border>
+        </Border>
+
+        <UniformGrid Background="#4b0082" Rows="5" Grid.Column="0" Grid.Row="1" DataContext="{Binding VideoInfoViewModel}">
+            <!-- Play Pause -->
+            <ToggleButton ToolTip="Start download all videos"  Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" 
+              Command="{Binding DownloadAllCommand}"
+                          DataContext="{Binding VideoItemsViewModel}">
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid Background="Transparent">
+                            <!-- Background Rectangle to cover full button area -->
+                            <Rectangle Fill="Transparent"/>
+                            <!-- Play Icon -->
+                            <Grid x:Name="PlayIcon" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <!-- Left part of arrow -->
+                                <Rectangle x:Name="LeftLine" Width="2" Height="30" Fill="Black" RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <RotateTransform x:Name="LeftLineRotate" Angle="-45"/>
+                                            <TranslateTransform x:Name="LeftLineTranslate" X="0" Y="-10"/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <!-- Right part of arrow -->
+                                <Rectangle x:Name="RightLine" Width="2" Height="30" Fill="Black" RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <RotateTransform x:Name="RightLineRotate" Angle="45"/>
+                                            <TranslateTransform x:Name="RightLineTranslate" X="0" Y="10"/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Transition from Play (>) to Pause (||) -->
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineRotate"
+                                                 Storyboard.TargetProperty="Angle"
+                                                 To="0" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineRotate"
+                                                 Storyboard.TargetProperty="Angle"
+                                                 To="0" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineTranslate"
+                                                 Storyboard.TargetProperty="X"
+                                                 To="-10" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineTranslate"
+                                                 Storyboard.TargetProperty="X"
+                                                 To="10" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineTranslate"
+                                                 Storyboard.TargetProperty="Y"
+                                                 To="0" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineTranslate"
+                                                 Storyboard.TargetProperty="Y"
+                                                 To="0" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Transition from Pause (||) back to Play (>) -->
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineRotate"
+                                                 Storyboard.TargetProperty="Angle"
+                                                 To="-45" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineRotate"
+                                                 Storyboard.TargetProperty="Angle"
+                                                 To="45" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineTranslate"
+                                                 Storyboard.TargetProperty="X"
+                                                 To="0" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineTranslate"
+                                                 Storyboard.TargetProperty="X"
+                                                 To="0" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="LeftLineTranslate"
+                                                 Storyboard.TargetProperty="Y"
+                                                 To="-10" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="RightLineTranslate"
+                                                 Storyboard.TargetProperty="Y"
+                                                 To="10" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+            </ToggleButton>
+
+            <!-- Format -->
+            <ToggleButton ToolTip="Select video(includes audio)/audio only" Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" 
+  Command="{Binding SwitchFormatCommand}"
+              IsChecked="{Binding Format}">
+
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Selection Indicator -->
+                            <Border Background="#9932cc"
+    Height="50"
+    Width="75"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Center">
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="IndicatorTransform"/>
+                                </Border.RenderTransform>
+                            </Border>
+
+                            <!-- TextBlocks for MP4 and MP3 -->
+                            <Canvas Grid.Column="0">
+                                <Rectangle Margin="7 5 0 0"
+                                           Width="60"
+                                           Height="40"
+                                           Stroke="Black" 
+                                           StrokeThickness="2" 
+                                           Fill="Transparent"/>
+                            </Canvas>
+                            <TextBlock Text="▶" 
+       Grid.Column="0"
+       HorizontalAlignment="Center" 
+       VerticalAlignment="Center" 
+       Foreground="Black" 
+       FontSize="30"
+                                       Margin="4 0 0 5"/>
+                            <TextBlock Text="🔊" 
+       Grid.Column="1"
+       HorizontalAlignment="Center" 
+       VerticalAlignment="Center" 
+       Foreground="Black" 
+       FontSize="35"
+                                       Margin="0 0 0 5"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Trigger for Checked State -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="IndicatorTransform"
+                             Storyboard.TargetProperty="X"
+                             To="75"
+                             Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="IndicatorTransform"
+                             Storyboard.TargetProperty="X"
+                             To="0"
+                             Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+            </ToggleButton>
+
+            <!-- Qualities -->
+            <ToggleButton ToolTip="Select quality for video/audio" Cursor="Hand" Content="HD" Width="150" Height="75" HorizontalAlignment="Center" 
+              Command="{Binding OpenQualityPanelCommand}">
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border" 
+            Background="{TemplateBinding Background}" 
+            BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Trigger for unable button -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#4b0082"/>
+                                <Setter TargetName="border" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <!-- Trigger for default button -->
+                        <Setter Property="Background" Value="#4b0082"/>
+                        <Setter Property="Opacity" Value="1"/>
+                        <Setter Property="FontSize" Value="50"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="Black"/>
+
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+
+            <!-- Folder -->
+            <ToggleButton Cursor="Hand" ToolTip="Select the folder for downloadings" Width="150" Height="75" HorizontalAlignment="Center" VerticalAlignment="Center"
+              IsChecked="{Binding DataContext.FolderToggleButton, 
+                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                          Command="{Binding DataContext.ChangeDownloadPathCommand, 
+                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}">>
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <!-- Bottom part of folder -->
+                            <Path Stroke="Black" StrokeThickness="1" Fill="#9932cc" 
+              Data="M 40,65 L 40,15 L 65,15 L 75,25 L 110,25 L 110,65 Z"/>
+
+                            <!-- Top part of folder -->
+                            <Path Stroke="Black" StrokeThickness="1" Fill="#4b0082">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathFigure StartPoint="40,65">
+                                            <!-- Bottom left line -->
+                                            <LineSegment x:Name="BottomLeft" Point="45,35" />
+                                            <!-- Top right line -->
+                                            <LineSegment x:Name="TopLineEnd" Point="115,35" />
+                                            <!-- Bottom right line -->
+                                            <LineSegment Point="110,65" />
+                                        </PathFigure>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
+
+                        <!-- Animation for toggle button -->
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.FolderToggleButton, 
+                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Animation right point top line -->
+                                            <PointAnimation Storyboard.TargetName="TopLineEnd"
+                                        Storyboard.TargetProperty="Point"
+                                        To="120,40" Duration="0:0:0.2" />
+                                            <!-- Animation left point top line -->
+                                            <PointAnimation Storyboard.TargetName="BottomLeft"
+                                        Storyboard.TargetProperty="Point"
+                                        To="50,40" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Animation back right point top line -->
+                                            <PointAnimation Storyboard.TargetName="TopLineEnd"
+                                        Storyboard.TargetProperty="Point"
+                                        To="115,35" Duration="0:0:0.2" />
+                                            <!-- Animation back left point top line -->
+                                            <PointAnimation Storyboard.TargetName="BottomLeft"
+                                        Storyboard.TargetProperty="Point"
+                                        To="45,35" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+            </ToggleButton>
+
+            <!-- Settings -->
+            <ToggleButton ToolTip="Settings" Cursor="Hand" Width="150" Height="75" Background="#4b0082" BorderBrush="Transparent" BorderThickness="0"
+              Command="{Binding DataContext.SettingsCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True"/>
+                                        <Trigger Property="IsChecked" Value="True"/>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ToggleButton.Style>
+
+                <ToggleButton.Content>
+                    <Canvas Width="75" Height="75" RenderTransformOrigin="0.5,0.5" x:Name="canvasGear">
+                        <Canvas.RenderTransform>
+                            <RotateTransform/>
+                        </Canvas.RenderTransform>
+
+                        <!-- Out circle -->
+                        <Ellipse Width="60" Height="60" Fill="Black" Canvas.Left="7.5" Canvas.Top="7.5"/>
+
+                        <!-- Inner circle -->
+                        <Ellipse Width="40" Height="40" Fill="#4b0082" Canvas.Left="17.5" Canvas.Top="17.5"/>
+
+                        <!-- Gear teeth (square) -->
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="0"/>
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="65"/>
+
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="0" Canvas.Top="32.5"/>
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="65" Canvas.Top="32.5"/>
+
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Canvas>
+                </ToggleButton.Content>
+                <ToggleButton.Triggers>
+                    <EventTrigger RoutedEvent="ToggleButton.Checked">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="90" Duration="0:0:0.3" 
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                         Storyboard.TargetName="canvasGear"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="0" Duration="0:0:0.3" 
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                         Storyboard.TargetName="canvasGear"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ToggleButton.Triggers>
+            </ToggleButton>
+        </UniformGrid>
+
+        <!-- Zone for downloading videos -->
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{Binding VideoList}" DataContext="{Binding VideoInfoViewModel.VideoItemsViewModel}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Background="#292929"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <StaticResource ResourceKey="VideoItemTemplate"/>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Panel with actual video qualities -->
+        <ItemsControl Grid.Column="1" Grid.Row="1"  Width="80" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Visibility="{Binding DataContext.VideoInfoViewModel.IsQualityPanelOpen,
+                      RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                      Converter={StaticResource BooleanToVisibilityConverter}}"
+                      ItemsSource="{Binding QualityPanelList}" 
+                      DataContext="{Binding VideoInfoViewModel.CurrentVideo.DownloadInfo}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding DataContext.VideoInfoViewModel.QualityPanelListRows, 
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding .}"
+                            Height="51.3"
+                            Background="#4b0082"
+                            BorderBrush="Gray"
+                            BorderThickness="1, 0, 0, 0"
+                            Command="{Binding DataContext.VideoInfoViewModel.SelectQualityCommand, 
+          RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding .}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Block with info about video and setting it -->
+        <ContentControl Grid.Row="1" Grid.Column="1"
+                Visibility="{Binding IsVideoInContentControl, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Content="{Binding CurrentVideo}" 
+                ContentTemplate="{StaticResource VideoInfoTemplate}"
+                DataContext="{Binding VideoInfoViewModel}"/>
+
+    </Grid>
+</Window>

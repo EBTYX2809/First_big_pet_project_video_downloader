@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntiPremVD", "AntiPremVD\AntiPremVD.csproj", "{A81AC09B-D579-49EF-B40A-1306A3A1B563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntiPremVDTests", "AntiPremVDTests\AntiPremVDTests.csproj", "{71B1D83C-1436-42E0-8669-0B2CE5A4F31F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A81AC09B-D579-49EF-B40A-1306A3A1B563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A81AC09B-D579-49EF-B40A-1306A3A1B563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A81AC09B-D579-49EF-B40A-1306A3A1B563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A81AC09B-D579-49EF-B40A-1306A3A1B563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71B1D83C-1436-42E0-8669-0B2CE5A4F31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71B1D83C-1436-42E0-8669-0B2CE5A4F31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71B1D83C-1436-42E0-8669-0B2CE5A4F31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71B1D83C-1436-42E0-8669-0B2CE5A4F31F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8406873B-3B87-48F9-BCC8-F0CC610C42F3}
+	EndGlobalSection
+EndGlobal
