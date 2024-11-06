@@ -15,6 +15,8 @@ namespace AntiPremVD.ViewModel
 
         // Services ////////////////////////////////////////////////////////////////////////////////
         private readonly VideoListService _videoListService;
+        private readonly JsonParser _jsonParser;
+        public JsonParser JsonParser => _jsonParser;
 
         // Propetries //////////////////////////////////////////////////////////////////////////////
         private Video _currentVideo;
@@ -102,10 +104,11 @@ namespace AntiPremVD.ViewModel
 
         // Constructors //////////////////////////////////////////////////////////////////////////
         public VideoInfoViewModel() { }
-        public VideoInfoViewModel(VideoItemsViewModel videoItemsViewModel, VideoListService videoListService)
+        public VideoInfoViewModel(VideoItemsViewModel videoItemsViewModel, VideoListService videoListService, JsonParser jsonParser)
         {
             _videoItemsViewModel = videoItemsViewModel;
             _videoListService = videoListService;
+            _jsonParser = jsonParser;
 
             AddVideoCommand = new RelayCommand(AddVideo);
             CloseVideoCommand = new RelayCommand(CloseVideo);

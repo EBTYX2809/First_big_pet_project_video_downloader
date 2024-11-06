@@ -124,6 +124,8 @@
     <Compile Include="Model\DownloadManager.cs" />
     <Compile Include="Model\DownloadService.cs" />
     <Compile Include="Model\DownloadItem.cs" />
+    <Compile Include="Model\JsonInfo.cs" />
+    <Compile Include="Model\JsonParser.cs" />
     <Compile Include="Model\SizeConverter.cs" />
     <Compile Include="Model\VideoListService.cs" />
     <Compile Include="Model\VideoManager.cs" />
@@ -158,6 +160,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Model\Resources\ToolTipsEN.json" />
+    <None Include="Model\Resources\ToolTipsRU.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

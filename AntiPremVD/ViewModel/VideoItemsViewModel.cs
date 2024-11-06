@@ -16,6 +16,8 @@ namespace AntiPremVD.ViewModel
         // Services ////////////////////////////////////////////////////////////////////////////////
         private readonly VideoListService _videoListService;
         public ObservableCollection<Video> VideoList => _videoListService.VideoList;
+        private readonly JsonParser _jsonParser;
+        public JsonParser JsonParser => _jsonParser;
 
         // Properties //////////////////////////////////////////////////////////////////////////////
         private string DownloadPath = null;
@@ -73,9 +75,10 @@ namespace AntiPremVD.ViewModel
 
         // Contructors /////////////////////////////////////////////////////////////////////////////
         public VideoItemsViewModel() { }
-        public VideoItemsViewModel(VideoListService videoListService)
+        public VideoItemsViewModel(VideoListService videoListService, JsonParser jsonParser)
         {
             _videoListService = videoListService;
+            _jsonParser = jsonParser;
 
             CloseVideoCommand = new RelayCommand(CloseVideo, CanButtonsExecute);
             DeleteVideoCommand = new RelayCommand(DeleteVideo, CanButtonsExecute);

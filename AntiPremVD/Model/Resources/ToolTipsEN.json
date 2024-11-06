@@ -1,0 +1,15 @@
+{
+  "all_delete_button_tool_tip": "Delete all videos from download list",
+  "all_play_pause_tool_tip": "Start download all videos",
+  "set_format_tool_tip": "Select video(includes audio)/audio only",
+  "set_qualities_tool_tip": "Select quality for video/audio",
+  "set_folder_tool_tip": "Select the folder for downloadings",
+  "global_settings_tool_tip": "Settings",
+  "single_play_pause_tool_tip": "Start download this video",
+  "open_folder_tool_tip": "Open video in folder",
+  "video_settings_tool_tip": "Change video settings",
+  "single_delete_tool_tip": "Delete video from folder and from download list",
+  "close_video_tool_tip": "Delete video from download list",
+  "close_video_info_tool_tip": "Delete close video info",
+  "add_video_tool_tip": "Add video to download list"
+}

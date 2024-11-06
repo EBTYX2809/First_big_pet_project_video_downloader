@@ -17,11 +17,12 @@ namespace AntiPremVD.View
             InitializeComponent();
 
             VideoListService videoListService = new VideoListService();
+            JsonParser jsonParser = new JsonParser();
 
             // Create every needed ViewModels and dependency injections
-            var videoItemsViewModel = new VideoItemsViewModel(videoListService);
-            var videoInfoViewModel = new VideoInfoViewModel(videoItemsViewModel, videoListService);
-            var mainViewModel = new MainViewModel(videoInfoViewModel, videoListService);
+            var videoItemsViewModel = new VideoItemsViewModel(videoListService, jsonParser);
+            var videoInfoViewModel = new VideoInfoViewModel(videoItemsViewModel, videoListService, jsonParser);
+            var mainViewModel = new MainViewModel(videoInfoViewModel, videoListService, jsonParser);
 
             DataContext = mainViewModel;
         }

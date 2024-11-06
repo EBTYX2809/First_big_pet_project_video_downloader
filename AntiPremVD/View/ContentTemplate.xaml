@@ -28,7 +28,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Content="✖"
-                        ToolTip="Delete close video info"
+                        ToolTip="{Binding DataContext.JsonParser.JsonInfo.close_video_info_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}"
                         Width="30" 
                         Height="30"
                         Grid.Row="0"
@@ -101,7 +102,8 @@
                                Height="Auto"/>
                 </StackPanel>
 
-                <Button ToolTip="Add video to download list"
+                <Button ToolTip="{Binding DataContext.JsonParser.JsonInfo.add_video_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}"
                         Grid.Row="3"
                         Grid.Column="1"
                         Content="✚" 

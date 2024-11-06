@@ -16,6 +16,8 @@ namespace AntiPremVD.ViewModel
 
         // Services ////////////////////////////////////////////////////////////////////////////////
         private readonly VideoListService _videoListService;
+        private readonly JsonParser _jsonParser;
+        public JsonParser JsonParser => _jsonParser;
 
         // Properties //////////////////////////////////////////////////////////////////////////////
         private string _downloadPath;
@@ -98,10 +100,11 @@ namespace AntiPremVD.ViewModel
 
         // Constructors ////////////////////////////////////////////////////////////////////////////
         public MainViewModel() { }
-        public MainViewModel(VideoInfoViewModel videoInfoViewModel, VideoListService videoListService)
+        public MainViewModel(VideoInfoViewModel videoInfoViewModel, VideoListService videoListService, JsonParser jsonParser)
         {
             _videoInfoViewModel = videoInfoViewModel;
             _videoListService = videoListService;
+            _jsonParser = jsonParser;
 
             ClearVideosCommand = new RelayCommand(ClearVideoItems);
             ChangeDownloadPathCommand = new RelayCommand(SelectFolder);
@@ -153,7 +156,9 @@ namespace AntiPremVD.ViewModel
         }
         private void Settings(object parameter)
         {
-            // Will be later
+            if (!SettingsToggleButton) JsonParser.SetLanguage("RU");
+            else JsonParser.SetLanguage("EN");
+            SettingsToggleButton = !SettingsToggleButton;
         }
         private async void LoadingUrl()
         {

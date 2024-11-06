@@ -107,7 +107,7 @@
             <Border CornerRadius="10"
                     Background="#d58ff7"
                     BorderThickness="0">
-                <Button ToolTip="Delete all videos from download list"
+                <Button ToolTip="{Binding JsonParser.JsonInfo.all_delete_button_tool_tip}"
                         Foreground="Black"
                         Style="{StaticResource Xbutton}"
                         Content="✖"
@@ -118,7 +118,7 @@
 
         <UniformGrid Background="#4b0082" Rows="5" Grid.Column="0" Grid.Row="1" DataContext="{Binding VideoInfoViewModel}">
             <!-- Play Pause -->
-            <ToggleButton ToolTip="Start download all videos"  Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <ToggleButton ToolTip="{Binding JsonParser.JsonInfo.all_play_pause_tool_tip}"  Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" 
                           Command="{Binding DownloadAllCommand}"
                           DataContext="{Binding VideoItemsViewModel}">
                 <ToggleButton.Template>
@@ -207,7 +207,7 @@
             </ToggleButton>
 
             <!-- Format -->
-            <ToggleButton ToolTip="Select video(includes audio)/audio only" Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" 
+            <ToggleButton ToolTip="{Binding JsonParser.JsonInfo.set_format_tool_tip}" Cursor="Hand" Width="150" Height="50" HorizontalAlignment="Center" 
                           Command="{Binding SwitchFormatCommand}"
                           IsChecked="{Binding Format}">
 
@@ -284,7 +284,7 @@
             </ToggleButton>
 
             <!-- Qualities -->
-            <ToggleButton ToolTip="Select quality for video/audio" Cursor="Hand" Content="HD" Width="150" Height="75" HorizontalAlignment="Center" 
+            <ToggleButton ToolTip="{Binding JsonParser.JsonInfo.set_qualities_tool_tip}" Cursor="Hand" Content="HD" Width="150" Height="75" HorizontalAlignment="Center" 
                           Command="{Binding OpenQualityPanelCommand}">
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="ToggleButton">
@@ -319,7 +319,7 @@
             </ToggleButton>
 
             <!-- Folder -->
-            <ToggleButton Cursor="Hand" ToolTip="Select the folder for downloadings" Width="150" Height="75" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <ToggleButton Cursor="Hand" ToolTip="{Binding JsonParser.JsonInfo.set_folder_tool_tip}" Width="150" Height="75" HorizontalAlignment="Center" VerticalAlignment="Center"
                           IsChecked="{Binding DataContext.FolderToggleButton, 
                                               RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                           Command="{Binding DataContext.ChangeDownloadPathCommand, 
@@ -385,9 +385,9 @@
                     </ControlTemplate>
                 </ToggleButton.Template>
             </ToggleButton>
-
+                       
             <!-- Settings -->
-            <ToggleButton ToolTip="Settings" Cursor="Hand" Width="150" Height="75" Background="#4b0082" BorderBrush="Transparent" BorderThickness="0"
+            <ToggleButton ToolTip="{Binding JsonParser.JsonInfo.global_settings_tool_tip}" Cursor="Hand" Width="150" Height="75" Background="#4b0082" BorderBrush="Transparent" BorderThickness="0"
                           Command="{Binding DataContext.SettingsCommand, 
                                             RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <ToggleButton.Style>
@@ -413,48 +413,55 @@
                 </ToggleButton.Style>
 
                 <ToggleButton.Content>
-                    <Canvas Width="75" Height="75" RenderTransformOrigin="0.5,0.5" x:Name="canvasGear">
-                        <Canvas.RenderTransform>
-                            <RotateTransform/>
-                        </Canvas.RenderTransform>
+                    <Grid>
+                        <Canvas Width="75" Height="75" RenderTransformOrigin="0.5,0.5" x:Name="canvasGear">
+                            <Canvas.RenderTransform>
+                                <RotateTransform/>
+                            </Canvas.RenderTransform>
 
-                        <!-- Out circle -->
-                        <Ellipse Width="60" Height="60" Fill="Black" Canvas.Left="7.5" Canvas.Top="7.5"/>
+                            <!-- Out circle -->
+                            <Ellipse Width="60" Height="60" Fill="Black" Canvas.Left="7.5" Canvas.Top="7.5"/>
 
-                        <!-- Inner circle -->
-                        <Ellipse Width="40" Height="40" Fill="#4b0082" Canvas.Left="17.5" Canvas.Top="17.5"/>
+                            <!-- Inner circle -->
+                            <Ellipse Width="40" Height="40" Fill="#4b0082" Canvas.Left="17.5" Canvas.Top="17.5"/>
 
-                        <!-- Gear teeth (square) -->
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="0"/>
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="65"/>
+                            <!-- Gear teeth (square) -->
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="0"/>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="32.5" Canvas.Top="65"/>
 
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="0" Canvas.Top="32.5"/>
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="65" Canvas.Top="32.5"/>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="0" Canvas.Top="32.5"/>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="65" Canvas.Top="32.5"/>
 
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="45"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="45"/>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
 
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="45"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="45"/>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
 
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="45"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="10" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="45"/>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
 
-                        <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="45"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                    </Canvas>
+                            <Rectangle Width="10" Height="10" Fill="Black" Canvas.Left="55" Canvas.Top="55" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="45"/>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Canvas>
+
+                        <!-- Language -->
+                        <TextBlock Text="{Binding JsonParser.Language}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   FontSize="20" FontWeight="Bold"/>
+
+                    </Grid>
                 </ToggleButton.Content>
                 <ToggleButton.Triggers>
                     <EventTrigger RoutedEvent="ToggleButton.Checked">

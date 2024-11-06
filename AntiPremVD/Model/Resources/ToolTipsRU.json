@@ -1,0 +1,15 @@
+{
+  "all_delete_button_tool_tip": "Удаляет все видео из списка загрузок",
+  "all_play_pause_tool_tip": "Начать/остановить загружать все видео",
+  "set_format_tool_tip": "Выбери видео(включает аудио)/аудио",
+  "set_qualities_tool_tip": "Выбери качество для видео/аудио",
+  "set_folder_tool_tip": "Выбери папку для загрузок",
+  "global_settings_tool_tip": "Настройки",
+  "single_play_pause_tool_tip": "Начать/остановить загружать это видео",
+  "open_folder_tool_tip": "Открыть видео в папке",
+  "video_settings_tool_tip": "Изменить параметры видео",
+  "single_delete_tool_tip": "Удалить видео из папки и списка",
+  "close_video_tool_tip": "Удалить видео из списка",
+  "close_video_info_tool_tip": "Закрыть информацию о видео",
+  "add_video_tool_tip": "Добавить видео в список загрузки"
+}

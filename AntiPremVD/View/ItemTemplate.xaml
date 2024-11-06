@@ -72,7 +72,8 @@
                              Margin="0">
 
                     <!-- Play/Pause ToggleButton -->
-                    <ToggleButton ToolTip="Start download this video"
+                    <ToggleButton ToolTip="{Binding DataContext.JsonParser.JsonInfo.single_play_pause_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                   Cursor="Hand"
                                   Width="30"
                                   Height="30"
@@ -195,7 +196,8 @@
                     </ToggleButton>
 
                     <!-- Folder Button -->
-                    <Button ToolTip="Open video in folder"
+                    <Button ToolTip="{Binding DataContext.JsonParser.JsonInfo.open_folder_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                             Width="30"
                             Height="30"
                             Style="{StaticResource Xbutton}"
@@ -230,7 +232,8 @@
                     </Button>
 
                     <!-- Settings Button -->
-                    <Button ToolTip="Change video settings"
+                    <Button ToolTip="{Binding DataContext.JsonParser.JsonInfo.video_settings_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                             Width="30"
                             Height="30"
                             Style="{StaticResource Xbutton}"
@@ -319,7 +322,8 @@
                     </Button>
 
                     <!-- Delete Button -->
-                    <Button ToolTip="Delete video from folder and from download list"
+                    <Button ToolTip="{Binding DataContext.JsonParser.JsonInfo.single_delete_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                             Width="30"
                             Height="30"
                             Style="{StaticResource Xbutton}"
@@ -343,7 +347,8 @@
                     <Button Command="{Binding DataContext.CloseVideoCommand, 
                                              RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                             CommandParameter="{Binding}"
-                            ToolTip="Delete video from download list"
+                            ToolTip="{Binding DataContext.JsonParser.JsonInfo.close_video_tool_tip,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                             Width="30"
                             Height="30"
                             Style="{StaticResource Xbutton}"
